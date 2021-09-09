@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:nhl_tournament/models/match.dart';
+import 'package:nhl_tournament/core/models/match.dart';
+import 'package:nhl_tournament/core/viewmodels/matches_viewmodel.dart';
 import 'package:nhl_tournament/ui/widgets/match_tile.dart';
-import 'package:nhl_tournament/viewmodels/matches_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nhl_tournament/ui/home_page.dart';
-import 'package:nhl_tournament/viewmodels/matches_viewmodel.dart';
+import 'package:nhl_tournament/core/viewmodels/matches_viewmodel.dart';
+import 'package:nhl_tournament/ui/pages/home_page.dart';
 import 'package:provider/provider.dart';
+
+import 'helpers/dependency_assembly.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  setupDependencyAssembler();
+
   bool isInRelease = true;
   assert(() {
     isInRelease = false;

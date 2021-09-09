@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nhl_tournament/models/match.dart';
-import 'package:nhl_tournament/ui/home_page.dart';
+import 'package:nhl_tournament/core/models/match.dart';
+import 'package:nhl_tournament/core/viewmodels/matches_viewmodel.dart';
+import 'package:nhl_tournament/ui/pages/home_page.dart';
 import 'package:nhl_tournament/ui/widgets/rounded_button.dart';
-import 'package:nhl_tournament/viewmodels/matches_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets/match_tile.dart';
+import '../widgets/match_tile.dart';
 
 class DetailsPage extends StatefulWidget {
   final Game game;

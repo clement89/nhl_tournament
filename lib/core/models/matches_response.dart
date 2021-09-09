@@ -1,4 +1,4 @@
-import 'package:nhl_tournament/models/match.dart';
+import 'package:nhl_tournament/core/models/match.dart';
 
 class MatchesResponse {
   late List<Game> matches;

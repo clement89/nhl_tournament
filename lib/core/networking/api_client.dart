@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-import '../utils/app_exception.dart';
+import '../../utils/app_exception.dart';
 
 class WebApiClient {
   final String baseUrl =

@@ -1,21 +1,24 @@
 import 'package:flutter/cupertino.dart';
-import 'package:nhl_tournament/constants.dart';
-import 'package:nhl_tournament/models/match.dart';
-import 'package:nhl_tournament/networking/api_client.dart';
-import 'package:nhl_tournament/networking/api_repository.dart';
+import 'package:nhl_tournament/core/models/match.dart';
+import 'package:nhl_tournament/core/networking/api_repository.dart';
+import 'package:nhl_tournament/helpers/constants.dart';
+
+import '../../helpers/dependency_assembly.dart';
 
 class MatchesViewModel extends ChangeNotifier {
-  ApiRepository _apiRepository = ApiRepository(WebApiClient());
+  // ApiRepository _apiRepository = ApiRepository();
+
+  ApiRepository apiRepository = dependencyAssembler<ApiRepository>();
 
   List<Game> allMatches = [];
   List<Game> easternMatches = [];
   List<Game> westernMatches = [];
   String errorMessage = '';
 
-  void fetchAllMatches() async {
+  Future fetchAllMatches() async {
     try {
       errorMessage = '';
-      allMatches = await _apiRepository.getAllMatches();
+      allMatches = await apiRepository.getAllMatches();
       easternMatches = allMatches
           .where((i) => i.team == kTeamEastern && i.round == 1)
           .toList();
