@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:nhl_tournament/home_page.dart';
+import 'package:nhl_tournament/ui/home_page.dart';
+import 'package:nhl_tournament/viewmodels/matches_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  bool isInRelease = true;
+  assert(() {
+    isInRelease = false;
+    return true;
+  }());
 
-  runApp(MyApp());
+  if (isInRelease) {
+    debugPrint = (String? message, {int? wrapWidth}) {};
+  }
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MatchesViewModel()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
