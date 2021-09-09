@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nhl_tournament/models/match.dart';
+import 'package:nhl_tournament/ui/home_page.dart';
+import 'package:nhl_tournament/ui/rounded_button.dart';
 import 'package:nhl_tournament/viewmodels/matches_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -17,12 +19,11 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-  }
+  final PageRouteBuilder _homeRoute = new PageRouteBuilder(
+    pageBuilder: (BuildContext context, _, __) {
+      return HomePage();
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +53,6 @@ class _DetailsPageState extends State<DetailsPage> {
                       'NHL 2019 Playoffs',
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
-                    // SizedBox(
-                    //   height: 4,
-                    // ),
-                    // Text(
-                    //   'Stanly Cup Final',
-                    //   style: TextStyle(
-                    //     fontSize: 14,
-                    //     fontWeight: FontWeight.normal,
-                    //     color: Colors.white60,
-                    //   ),
-                    // ),
                   ],
                 ),
               )
@@ -90,27 +80,59 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(
                 height: 30,
               ),
-              Container(
-                width: double.infinity,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  child: Center(
-                    child: Text(
-                      _viewModel.getMatchInfo(widget.game),
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white60,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              _buildTitle(_viewModel.isFinal(widget.game),
+                  _viewModel.getMatchInfo(widget.game)),
               _viewModel.isFinal(widget.game) ? Container() : _nextMatch(),
             ],
           ),
         ));
+  }
+
+  _buildTitle(bool isFinal, String title) {
+    return Column(
+      children: [
+        isFinal
+            ? Center(
+                child: Text(
+                  '🎉',
+                  style: TextStyle(
+                    fontSize: 44,
+                  ),
+                ),
+              )
+            : Container(),
+        Container(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Center(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isFinal ? 22 : 18,
+                  fontWeight: FontWeight.bold,
+                  color: isFinal ? Colors.white : Colors.white60,
+                ),
+              ),
+            ),
+          ),
+        ),
+        isFinal
+            ? Padding(
+                padding: const EdgeInsets.only(top: 50.0),
+                child: BouncingIconButton(
+                  size: 60,
+                  iconData: Icons.home,
+                  onClickAction: () {
+                    Navigator.pushAndRemoveUntil(
+                        context, _homeRoute, (Route<dynamic> r) => false);
+                  },
+                ),
+              )
+            : Container(),
+      ],
+    );
   }
 
   _nextMatch() {

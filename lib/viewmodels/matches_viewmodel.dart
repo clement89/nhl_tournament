@@ -21,6 +21,9 @@ class MatchesViewModel extends ChangeNotifier {
       errorMessage = response.errorMessage;
     } else {
       errorMessage = '';
+      easternMatches = [];
+      westernMatches = [];
+      allMatches = [];
 
       var responseData = jsonDecode(response.data);
       for (Map<String, dynamic> json in responseData['matches']) {
@@ -64,6 +67,9 @@ class MatchesViewModel extends ChangeNotifier {
   }
 
   String getMatchInfo(Game game) {
+    if (isFinal(game)) {
+      return '${game.winner} has won the final match '.toUpperCase();
+    }
     return 'Team ${game.winner} has won the match.!';
   }
 
