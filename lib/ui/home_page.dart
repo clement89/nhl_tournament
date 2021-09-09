@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:nhl_tournament/models/match.dart';
-import 'package:nhl_tournament/ui/match_tile.dart';
+import 'package:nhl_tournament/ui/widgets/match_tile.dart';
 import 'package:nhl_tournament/viewmodels/matches_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -160,9 +160,9 @@ class _HomePageState extends State<HomePage>
     return Consumer<MatchesViewModel>(
       builder: (context, viewModel, child) {
         if (viewModel.errorMessage.isNotEmpty) {
-          return Text(viewModel.errorMessage);
+          return _errorWidget(viewModel.errorMessage);
         } else if (viewModel.easternMatches.isEmpty) {
-          return CircularProgressIndicator();
+          return _buildLoading();
         }
 
         return _matchList(viewModel.easternMatches);
@@ -174,12 +174,41 @@ class _HomePageState extends State<HomePage>
     return Consumer<MatchesViewModel>(
       builder: (context, viewModel, child) {
         if (viewModel.errorMessage.isNotEmpty) {
-          return Text(viewModel.errorMessage);
+          return _errorWidget(viewModel.errorMessage);
         } else if (viewModel.westernMatches.isEmpty) {
-          return CircularProgressIndicator();
+          return _buildLoading();
         }
         return _matchList(viewModel.westernMatches);
       },
+    );
+  }
+
+  _buildLoading() {
+    return CupertinoActivityIndicator();
+  }
+
+  _errorWidget(String error) {
+    return SizedBox(
+      height: 100,
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.info_outline_rounded,
+            size: 18,
+            color: Colors.redAccent.withOpacity(0.5),
+          ),
+          SizedBox(height: 10),
+          Text(
+            error,
+            style: TextStyle(
+              color: Colors.white38,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      )),
     );
   }
 

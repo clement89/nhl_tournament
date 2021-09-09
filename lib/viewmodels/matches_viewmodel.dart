@@ -1,13 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:nhl_tournament/constants.dart';
-import 'package:nhl_tournament/models/api_response.dart';
 import 'package:nhl_tournament/models/match.dart';
+import 'package:nhl_tournament/networking/api_client.dart';
 import 'package:nhl_tournament/networking/api_repository.dart';
 
 class MatchesViewModel extends ChangeNotifier {
-  ApiRepository _apiRepository = ApiRepository();
+  ApiRepository _apiRepository = ApiRepository(WebApiClient());
 
   List<Game> allMatches = [];
   List<Game> easternMatches = [];
@@ -15,28 +13,18 @@ class MatchesViewModel extends ChangeNotifier {
   String errorMessage = '';
 
   void fetchAllMatches() async {
-    print('fetchAllMatches');
-    ApiResponse response = await _apiRepository.getAllMatches();
-    if (response.isError) {
-      errorMessage = response.errorMessage;
-    } else {
+    try {
       errorMessage = '';
-      easternMatches = [];
-      westernMatches = [];
-      allMatches = [];
-
-      var responseData = jsonDecode(response.data);
-      for (Map<String, dynamic> json in responseData['matches']) {
-        Game _match = Game.fromMap(json);
-        allMatches.add(_match);
-      }
-
+      allMatches = await _apiRepository.getAllMatches();
       easternMatches = allMatches
           .where((i) => i.team == kTeamEastern && i.round == 1)
           .toList();
       westernMatches = allMatches
           .where((i) => i.team == kTeamWestern && i.round == 1)
           .toList();
+    } catch (e) {
+      print(e);
+      errorMessage = e.toString();
     }
 
     notifyListeners();
@@ -50,7 +38,6 @@ class MatchesViewModel extends ChangeNotifier {
 
   String getRound(Game match) {
     int round = match.round;
-    print(match.round);
 
     switch (round) {
       case 1:

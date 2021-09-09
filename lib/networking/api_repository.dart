@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-
-import '../models/api_response.dart';
-import 'api_client.dart';
+import 'package:nhl_tournament/models/match.dart';
+import 'package:nhl_tournament/models/matches_response.dart';
 
 class ApiRepository {
-  final WebApiClient _apiClient = WebApiClient();
+  var apiClient;
 
-  Future<ApiResponse> getAllMatches() async {
+  ApiRepository(this.apiClient);
+
+  // WebApiClient _apiClient = WebApiClient();
+
+  Future<List<Game>> getAllMatches() async {
     debugPrint('**** getAllMatches *****');
-    ApiResponse response =
-        await _apiClient.getRecordsFromServer(url: '/tournament');
-
-    return response;
+    final response = await apiClient.getRecordsFromServer(url: '/tournament');
+    return MatchesResponse.fromMap(response).matches;
   }
 }

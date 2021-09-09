@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nhl_tournament/models/match.dart';
 
-import '../constants.dart';
-import 'details_page.dart';
+import '../../constants.dart';
+import '../details_page.dart';
 
 class MatchTile extends StatelessWidget {
   final Game game;
