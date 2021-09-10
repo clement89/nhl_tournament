@@ -82,7 +82,11 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               _buildTitle(_viewModel.isFinal(widget.game),
                   _viewModel.getMatchInfo(widget.game)),
+              _buildScore(),
               _viewModel.isFinal(widget.game) ? Container() : _nextMatch(),
+              _viewModel.isFinal(widget.game)
+                  ? _buildHomeButton()
+                  : Container(),
             ],
           ),
         ));
@@ -118,19 +122,47 @@ class _DetailsPageState extends State<DetailsPage> {
             ),
           ),
         ),
-        isFinal
-            ? Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: BouncingIconButton(
-                  size: 60,
-                  iconData: Icons.home,
-                  onClickAction: () {
-                    Navigator.pushAndRemoveUntil(
-                        context, _homeRoute, (Route<dynamic> r) => false);
-                  },
+      ],
+    );
+  }
+
+  _buildScore() {
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+            child: Center(
+              child: Text(
+                'Score',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.amber,
                 ),
-              )
-            : Container(),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Center(
+              child: Text(
+                widget.game.summery,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -156,6 +188,20 @@ class _DetailsPageState extends State<DetailsPage> {
         MatchTile(
             game: context.read<MatchesViewModel>().getNextMatch(widget.game)),
       ],
+    );
+  }
+
+  _buildHomeButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 50.0),
+      child: BouncingIconButton(
+        size: 60,
+        iconData: Icons.home,
+        onClickAction: () {
+          Navigator.pushAndRemoveUntil(
+              context, _homeRoute, (Route<dynamic> r) => false);
+        },
+      ),
     );
   }
 }

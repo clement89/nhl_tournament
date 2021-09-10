@@ -9,7 +9,7 @@ import '../../utils/app_exception.dart';
 
 class WebApiClient {
   final String baseUrl =
-      'https://418317bb-59cf-4c42-9b3c-7d8828060bf6.mock.pstmn.io/v1';
+      'https://2f390d30-519d-4c53-80f8-c28327fef275.mock.pstmn.io/v1';
 
   Future<dynamic> getRecordsFromServer({required String url}) async {
     debugPrint('GET --------- ${baseUrl + url}');

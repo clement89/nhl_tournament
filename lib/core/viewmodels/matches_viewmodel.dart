@@ -58,7 +58,7 @@ class MatchesViewModel extends ChangeNotifier {
 
   String getMatchInfo(Game game) {
     if (isFinal(game)) {
-      return '${game.winner} has won the final match '.toUpperCase();
+      return '${game.winner} has won the Stanley Cup Finals'.toUpperCase();
     }
     return 'Team ${game.winner} has won the match.!';
   }

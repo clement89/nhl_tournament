@@ -9,10 +9,10 @@ class MockAPI extends ApiRepository {
   Future<List<Game>> getAllMatches() async {
     return Future.value([
       Game('001', 'Tampa Bay X Columbus', 'Eastern Conference', 1, 'Columbus',
-          'Ok', '005'),
-      Game('005', 'Nashville X Dallas', 'Western Conference', 1, 'Dallas', 'Ok',
-          '0011'),
-      Game('015', 'Boston X St.Louis', '', 4, 'St.Louis', 'Ok', '0011')
+          '4 - 3', '005'),
+      Game('005', 'Nashville X Dallas', 'Western Conference', 1, 'Dallas',
+          '3 - 4', '0011'),
+      Game('015', 'Boston X St.Louis', '', 4, 'St.Louis', '2 - 1', '0011')
     ]);
   }
 }
@@ -30,6 +30,7 @@ void main() {
       expect(viewModel.allMatches[0].round, 1);
       expect(viewModel.allMatches[1].id, '005');
       expect(viewModel.allMatches[1].winner, 'Dallas');
+      expect(viewModel.allMatches[1].summery, '3 - 4');
     });
     test('Check next match', () async {
       await viewModel.fetchAllMatches();
